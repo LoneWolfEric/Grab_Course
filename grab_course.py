@@ -1,9 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import time
+import random
 
 user_login = requests.session()
 
+# 登录教务处
 def login_in():
     while True:
         zjh = str(input('请输入你的学号：'))
@@ -26,7 +29,6 @@ def login_in():
 
         response = user_login.post(url, data = data, headers = headers)          # 登录教务处
 
-
         isError  = re.findall(r'<td class="errorTop">', response.content.decode('gbk'))
 
         if isError:                             # 判断账号密码是否正确
@@ -34,7 +36,8 @@ def login_in():
         else:
             print('登录成功')
             break
-            
+
+# 显示用户名称           
 def show_user_info():
     url = 'http://zhjw.scu.edu.cn/menu/s_top.jsp'
 
@@ -60,11 +63,24 @@ def show_user_info():
 
     print('你好，%s!' %(user_name))                             # 显示个人信息
 
+# 查询要强的课的信息
+def get_course_info():
+    pass
+
+# 抢课
+def grab_course():
+    pass
 
 
 def main():
     login_in()
     show_user_info()
+    get_course_info()
+    while True:
+        time.sleep(random.uniform(2, 6))
+        grab_course()
+    print('抢课成功')
+
 
 if __name__ == '__main__':
     main()
