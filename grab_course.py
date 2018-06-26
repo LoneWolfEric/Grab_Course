@@ -119,8 +119,28 @@ def grab_course():
         print(isSuccess)
         return 1
 
+def quit_course():
+    url = 'http://202.115.47.141/xkAction.do?actionType=10&kcId=102396020'
 
+    headers = {
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+        'Accept-Encoding': 'gzip, deflate',
+        'Accept-Language': 'zh-CN,zh;q=0.9',
+        'Cache-Control': 'max-age=0',
+        'Connection': 'keep-alive',
+        'Host': '202.115.47.141',
+        'Referer': 'http://202.115.47.141/xkAction.do?actionType=7',
+        'Upgrade-Insecure-Requests': '1',
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36'
+    }
 
+    # params = {
+    #         'actionType': '10',
+    #         'kcId': '102396020'
+    # }
+    response = user_login.get(url, headers = headers)
+    html = response.content.decode('gbk')
+    print(html)
 
 
 
@@ -128,6 +148,7 @@ def main():
     login_in()
     show_user_info()
     get_course_info()
+    # quit_course()
     while True:
         time.sleep(random.uniform(2, 6))
         if (grab_course() == 1):
