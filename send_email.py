@@ -25,7 +25,7 @@ def mail(receiver, title, content):
         ret = False
     return ret
  
-ret=mail('871855626@qq.com', '你爸爸喊你起床了', '儿子好')
+ret = mail('871855626@qq.com', '你爸爸喊你起床了', '儿子好')
 if ret:
     print("邮件发送成功")
 else:
