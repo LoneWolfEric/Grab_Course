@@ -32,12 +32,12 @@ def login_in():
             'mm': '081318'
         }
         try:
-            # response = user_login.post(url, data = data, headers = headers)          # 登录教务处
-            response = requests.post(url, data = data, headers = headers)          # 登录教务处
+            response = user_login.post(url, data = data, headers = headers)          # 登录教务处
+            # response = requests.post(url, data = data, headers = headers)          # 登录教务处
         except ConnectionError:
-            print('登录错误')
+            print('网络连接登录错误')
         except TimeoutError:
-            print('登录错误')
+            print('访问超时登录错误')
             
         
 
@@ -58,7 +58,7 @@ def show_user_info():
         'Accept-Encoding': 'gzip, deflate',
         'Accept-Language': 'zh-CN,zh;q=0.9',
         'Connection': 'keep-alive',
-        #'Cookie': 'JSESSIONID=bcdyFntur0YE6-Ttl03qw',
+        # 'Cookie': 'JSESSIONID=bcdyFntur0YE6-Ttl03qw',
         'Host': 'zhjw.scu.edu.cn',
         'Referer': 'http://zhjw.scu.edu.cn/loginAction.do',
         'Upgrade-Insecure-Requests': '1',
@@ -68,8 +68,9 @@ def show_user_info():
     user_info = user_login.get(url, headers = headers)     # 获取个人信息
     # user_info = requests.get(url, headers = headers)     # 获取个人信息
     html = user_info.content.decode('gbk')
-    print(html)
+    # print(html)
     user_name = re.findall(r'欢迎光临&nbsp;.{0,6}&nbsp;', html)
+    
     try:
         user_name = user_name[0]
         num = user_name.rindex('&nbsp;')
@@ -94,13 +95,12 @@ def grab_course():
         'Connection': 'keep-alive',
         'Content-Length': '46',
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Cookie': 'JSESSIONID=abdAG-4FkMWLO-STSP5qw',
+        # 'Cookie': 'JSESSIONID=abdAG-4FkMWLO-STSP5qw',
         'Host': 'zhjw.scu.edu.cn',
         'Origin': 'http://zhjw.scu.edu.cn',
         'Referer': 'http://zhjw.scu.edu.cn/xkAction.do?actionType=3&pageNumber=-1',
         'Upgrade-Insecure-Requests': '1',
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36'
-
     }
 
     data = {
@@ -112,6 +112,8 @@ def grab_course():
     response = user_login.post(url, data = data, headers = headers)
     html = response.content.decode('gbk')
     print(html)
+
+    # print(response.status_code)
     isSuccess = re.findall(r'<strong><font color="#990000">选课成功！</font></strong>', html)
     if isSuccess:
         print(isSuccess)
