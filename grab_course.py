@@ -16,7 +16,7 @@ def login_in():
         url = 'http://zhjw.scu.edu.cn/loginAction.do'
 
         headers = {
-            'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
+            'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
             # 'Cookie':'JSESSIONID=bcdyFntur0YE6-Ttl03qw',
             'Host':'zhjw.scu.edu.cn',
             'Origin':'http://zhjw.scu.edu.cn',
@@ -62,7 +62,7 @@ def show_user_info():
         'Host': 'zhjw.scu.edu.cn',
         'Referer': 'http://zhjw.scu.edu.cn/loginAction.do',
         'Upgrade-Insecure-Requests': '1',
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36'
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1'
     }
 
     user_info = user_login.get(url, headers = headers)     # 获取个人信息
@@ -82,7 +82,64 @@ def show_user_info():
     
 # 查询要强的课的信息
 def get_course_info():
-    pass
+    url = 'http://202.115.47.141/courseSearchAction.do'
+    headers = {
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+        'Accept-Encoding': 'gzip, deflate',
+        'Accept-Language': 'zh-CN,zh;q=0.9',
+        'Cache-Control': 'max-age=0',
+        'Connection': 'keep-alive',
+        'Content-Length': '103',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        # 'Cookie': 'JSESSIONID=abdAG-4FkMWLO-STSP5qw',
+        'Host': '202.115.47.141',
+        'Origin': 'http://202.115.47.141',
+        'Referer': 'http://202.115.47.141/courseSearchAction.do?temp=1',
+        'Upgrade-Insecure-Requests': '1',
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1'
+    }
+
+    data = {
+        'org.apache.struts.taglib.html.TOKEN': '022ddbd8531dcb5fab0aa74339c796c8',
+        'kch':'' ,
+        'kcm': '(unable to decode value)',
+        'jsm': '',
+        'xsjc': '',
+        'skxq': '',
+        'skjc': '',
+        'xaqh': '',
+        'jxlh': '',
+        'jash': '',
+        'pageSize': '20',
+        'showColumn': '(unable to decode value)',
+        'showColumn': '(unable to decode value)',
+        'showColumn': '(unable to decode value)',
+        'showColumn': '(unable to decode value)',
+        'showColumn': '(unable to decode value)',
+        'showColumn': '(unable to decode value)',
+        'showColumn': '(unable to decode value)',
+        'showColumn': '(unable to decode value)',
+        'showColumn': '(unable to decode value)',
+        'showColumn': '(unable to decode value)',
+        'showColumn': '(unable to decode value)',
+        'showColumn': '(unable to decode value)',
+        'showColumn': '(unable to decode value)',
+        'showColumn': '(unable to decode value)',
+        'showColumn': '(unable to decode value)',
+        'showColumn': '(unable to decode value)',
+        'pageNumber': 0,
+        'actionType': 1
+    }
+
+    response = user_login.post(url, data = data, headers = headers)
+    html = response.content.decode('gbk')
+    print(html)
+
+    # # print(response.status_code)
+    # isSuccess = re.findall(r'<strong><font color="#990000">选课成功！</font></strong>', html)
+    # if isSuccess:
+    #     print(isSuccess)
+    #     return 1
 
 # 抢课
 def grab_course():
@@ -100,7 +157,7 @@ def grab_course():
         'Origin': 'http://zhjw.scu.edu.cn',
         'Referer': 'http://zhjw.scu.edu.cn/xkAction.do?actionType=3&pageNumber=-1',
         'Upgrade-Insecure-Requests': '1',
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36'
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1'
     }
 
     data = {
@@ -131,7 +188,7 @@ def quit_course():
         'Host': '202.115.47.141',
         'Referer': 'http://202.115.47.141/xkAction.do?actionType=7',
         'Upgrade-Insecure-Requests': '1',
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36'
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1'
     }
 
     # params = {
@@ -149,13 +206,13 @@ def main():
     show_user_info()
     get_course_info()
     # quit_course()
-    while True:
-        time.sleep(random.uniform(2, 6))
-        if (grab_course() == 1):
-            break
-        print('抢课中')
+    # while True:
+    #     time.sleep(random.uniform(2, 6))
+    #     if (grab_course() == 1):
+    #         break
+    #     print('抢课中')
 
-    print('抢课成功')
+    # print('抢课成功')
 
 
 if __name__ == '__main__':
